@@ -14,7 +14,7 @@ public @interface ScopedMethod {
     String value() default "";
 
     @AliasFor("value")
-    String group() default "";
-
     String key() default "";
+
+    String group() default "";
 }
