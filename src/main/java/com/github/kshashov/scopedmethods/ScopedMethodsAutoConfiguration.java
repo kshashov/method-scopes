@@ -10,6 +10,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Added scoped methods support for the methods annotated with {@link com.github.kshashov.scopedmethods.api.ScopedMethod}.
+ * <p>
+ * Use {@link ScopedMethodsManager} to get the current scope id for the specified group.
+ *
+ * @see com.github.kshashov.scopedmethods.api.ScopedMethod
+ */
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(ScopedMethodsProperties.class)

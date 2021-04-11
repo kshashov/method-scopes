@@ -13,6 +13,9 @@ import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Method;
 
+/**
+ * Filters beand according to configuration properties and creates proxies for the supported ones.
+ */
 public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
     private static final AntPathMatcher pathMatcher = new AntPathMatcher(".");
     private final ScopedMethodsManager scopesManager;
@@ -68,6 +71,9 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
         return proxyFactory.getProxy();
     }
 
+    /**
+     * Creates scope before original method invocation and removes scope after it. Do nothing for the methods without {@link ScopedMethod} annotation.
+     */
     private static class MethodScopesInterceptor implements MethodInterceptor {
         private final ScopedMethodsManager scopesManager;
 

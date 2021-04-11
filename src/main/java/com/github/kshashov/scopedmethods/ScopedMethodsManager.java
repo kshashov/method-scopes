@@ -7,6 +7,9 @@ import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Repository storing information about currently active scopes. The current implementation doesn't allow to spawn new threads in annotated methods.
+ */
 @Slf4j
 public class ScopedMethodsManager {
     private static final ThreadLocal<Map<String, Stack<String>>> ACTIVE_SCOPES = new ThreadLocal<>();
@@ -22,10 +25,21 @@ public class ScopedMethodsManager {
                 .collect(Collectors.toMap(c -> c.getGroup(), c -> c));
     }
 
+    /**
+     * Shortcut for {@link #getCurrent(String)} for empty group.
+     *
+     * @return the current scope
+     */
     public String getCurrent() {
         return getCurrent("");
     }
 
+    /**
+     * Returns the current scope id for the specified group.
+     *
+     * @param group group id
+     * @return the current scope id for the specified group or {@code null} if nothing
+     */
     public String getCurrent(@NotNull String group) {
         Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
 
@@ -37,10 +51,12 @@ public class ScopedMethodsManager {
         return groupScopes.peek();
     }
 
-    void startScope(@NotNull String key) {
-        startScope("", key);
-    }
-
+    /**
+     * Starts scope for the specified group.
+     *
+     * @param group group id
+     * @param key   scope id
+     */
     void startScope(@NotNull String group, @NotNull String key) {
         Objects.requireNonNull(group);
 
@@ -57,10 +73,11 @@ public class ScopedMethodsManager {
         scopes.get(group).add(key);
     }
 
-    void popScope() {
-        popScope("");
-    }
-
+    /**
+     * Finishes the current scope for the specified group.
+     *
+     * @param group group id
+     */
     void popScope(@NotNull String group) {
         Objects.requireNonNull(group);
 
@@ -84,6 +101,4 @@ public class ScopedMethodsManager {
         }
         return key;
     }
-
-
 }

@@ -1,8 +1,9 @@
-# Scoped methods Spring Boot Starter
+# Scoped Methods Spring Boot Starter
 
 [![JitPack](https://jitpack.io/v/kshashov/scoped-methods.svg)](https://jitpack.io/#kshashov/scoped-methods)
 [![CircleCI](https://circleci.com/gh/kshashov/scoped-methods?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
 [![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/master/graph/badge.svg)](https://codecov.io/gh/kshashov/scoped-methods)
+
 ## Download
 ### Maven
 TODO
@@ -36,7 +37,7 @@ public class MasterSlaveDataSource extends AbstractRoutingDataSource {
 ## @ScopedMethod
 Arguments:
 * `value` or `key`: scope identificator
-* `group`: allow you to have several non-overlapping sets of scopes for different purposes
+* `group`: allow you to have several sets of scopes for different purposes
     ```java
     @ScopedMethod(group = "datasource", key = "master")
     @ScopedMethod(group = "datasource", key = "replica")
