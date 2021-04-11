@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.github.kshashov</groupId>
-	<artifactId>method-scopes</artifactId>
+	<artifactId>scoped-methods-spring-boot-starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Method Scopes</name>
-	<description>Demo project for Spring Boot</description>
+	<name>Scoped Methods</name>
+	<description>Scoped Methods Spring Boot Starter</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>

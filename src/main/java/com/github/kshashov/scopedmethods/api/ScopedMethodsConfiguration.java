@@ -1,8 +1,8 @@
-package com.github.kshashov.methodscopes.api;
+package com.github.kshashov.scopedmethods.api;
 
 import javax.validation.constraints.NotNull;
 
-public interface MethodScopesConfiguration {
+public interface ScopedMethodsConfiguration {
 
     @NotNull String getGroup();
 

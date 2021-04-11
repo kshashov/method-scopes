@@ -1,4 +1,4 @@
-package com.github.kshashov.methodscopes;
+package com.github.kshashov.scopedmethods;
 
 import org.springframework.test.context.ContextConfiguration;
 

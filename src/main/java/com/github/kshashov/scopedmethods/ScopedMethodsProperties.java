@@ -1,4 +1,4 @@
-package com.github.kshashov.methodscopes;
+package com.github.kshashov.scopedmethods;
 
 import lombok.Getter;
 import lombok.Setter;

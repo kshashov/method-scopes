@@ -1,7 +1,7 @@
-package com.github.kshashov.methodscopes.example;
+package com.github.kshashov.scopedmethods.example;
 
-import com.github.kshashov.methodscopes.MethodScopesManager;
-import com.github.kshashov.methodscopes.api.ScopedMethod;
+import com.github.kshashov.scopedmethods.ScopedMethodsManager;
+import com.github.kshashov.scopedmethods.api.ScopedMethod;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Service2Impl {
     @Autowired
-    MethodScopesManager scopesManager;
+    ScopedMethodsManager scopesManager;
 
     @ScopedMethod(group = MyScopeConfiguration.SCOPE, key = "inner")
     public void doSomething() {

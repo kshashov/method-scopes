@@ -1,6 +1,6 @@
-package com.github.kshashov.methodscopes;
+package com.github.kshashov.scopedmethods;
 
-import com.github.kshashov.methodscopes.api.MethodScopesConfiguration;
+import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
@@ -8,11 +8,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class MethodScopesManager {
+public class ScopedMethodsManager {
     private static final ThreadLocal<Map<String, Stack<String>>> ACTIVE_SCOPES = new ThreadLocal<>();
-    private final Map<String, MethodScopesConfiguration> scopesConfigurations;
+    private final Map<String, ScopedMethodsConfiguration> scopesConfigurations;
 
-    public MethodScopesManager(@NotNull List<MethodScopesConfiguration> scopesConfigurations) {
+    public ScopedMethodsManager(@NotNull List<ScopedMethodsConfiguration> scopesConfigurations) {
         Objects.requireNonNull(scopesConfigurations);
 
         ACTIVE_SCOPES.set(new HashMap<>());

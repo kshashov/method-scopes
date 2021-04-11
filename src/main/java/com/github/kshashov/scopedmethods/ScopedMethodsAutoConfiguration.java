@@ -1,6 +1,6 @@
-package com.github.kshashov.methodscopes;
+package com.github.kshashov.scopedmethods;
 
-import com.github.kshashov.methodscopes.api.MethodScopesConfiguration;
+import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,15 +13,15 @@ import java.util.Optional;
 @Slf4j
 @Configuration
 @EnableConfigurationProperties(ScopedMethodsProperties.class)
-public class MethodScopesAutoConfiguration {
+public class ScopedMethodsAutoConfiguration {
 
     @Bean
-    MethodScopesManager methodScopesManager(Optional<List<MethodScopesConfiguration>> methodScopesConfigurations) {
-        return new MethodScopesManager(methodScopesConfigurations.orElse(new ArrayList<>()));
+    ScopedMethodsManager methodScopesManager(Optional<List<ScopedMethodsConfiguration>> methodScopesConfigurations) {
+        return new ScopedMethodsManager(methodScopesConfigurations.orElse(new ArrayList<>()));
     }
 
     @Bean
-    ScopedMethodsBeanPostProcessor scopedMethodsBeanPostProcessor(MethodScopesManager methodScopesManager, ScopedMethodsProperties properties) {
+    ScopedMethodsBeanPostProcessor scopedMethodsBeanPostProcessor(ScopedMethodsManager methodScopesManager, ScopedMethodsProperties properties) {
         return new ScopedMethodsBeanPostProcessor(methodScopesManager, properties.isClassAnnotationRequired(), properties.getPackages());
     }
 }

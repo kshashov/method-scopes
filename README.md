@@ -1,5 +1,8 @@
 # Scoped methods Spring Boot Starter
 
+[![JitPack](https://jitpack.io/v/kshashov/scoped-methods.svg)](https://jitpack.io/#kshashov/scoped-methods)
+[![CircleCI](https://circleci.com/gh/kshashov/scoped-methods?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
+[![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/master/graph/badge.svg)](https://codecov.io/gh/kshashov/scoped-methods)
 ## Download
 ### Maven
 TODO
@@ -41,12 +44,14 @@ Arguments:
     @ScopedMethod(group = "mygroup", key = "key1")
     @ScopedMethod(group = "mygroup", key = "key2")
     ```
-
 The current implementation does not allow placing several such annotations on single method.
 
-## MethodScopesManager
+## @EnableScopedMethods
+If the `classAnnotationRequired` option is `true` (see the _Configurations_ section), this annotation must be set for the class in which `@ScopedMethod` annotated methods are declared.
 
-Inject `MethodScopesManager` bean to get the ability to retrive the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
+## ScopedMethodsManager
+
+Inject `ScopedMethodsManager` bean to get the ability to retrive the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
 ```java
 scopesManager.getCurrent(); // default "" group
 scopesManager.getCurrent("datasource");
@@ -62,5 +67,5 @@ Property | Description | Default value
 
 ### MethodScopesConfiguration
 
-You can declare your own `MethodScopesConfiguration` implementation to subscribe on scope changing. For example, it may be useful to keep track of a case when a master scope is created inside a replica scope.
+You can declare your own `ScopedMethodsConfiguration` implementation to subscribe on scope changing. For example, it may be useful to keep track of a case when a master scope is created inside a replica scope.
 

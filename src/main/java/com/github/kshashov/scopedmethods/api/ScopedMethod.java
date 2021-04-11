@@ -1,4 +1,4 @@
-package com.github.kshashov.methodscopes.api;
+package com.github.kshashov.scopedmethods.api;
 
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;

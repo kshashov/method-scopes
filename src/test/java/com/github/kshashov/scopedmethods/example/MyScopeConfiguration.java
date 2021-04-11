@@ -1,6 +1,6 @@
-package com.github.kshashov.methodscopes.example;
+package com.github.kshashov.scopedmethods.example;
 
-import com.github.kshashov.methodscopes.api.MethodScopesConfiguration;
+import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 
 @Slf4j
 @Component
-public class MyScopeConfiguration implements MethodScopesConfiguration {
+public class MyScopeConfiguration implements ScopedMethodsConfiguration {
     public static final String SCOPE = "mygroup";
 
     @Override

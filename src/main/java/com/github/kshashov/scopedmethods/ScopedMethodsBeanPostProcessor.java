@@ -1,7 +1,7 @@
-package com.github.kshashov.methodscopes;
+package com.github.kshashov.scopedmethods;
 
-import com.github.kshashov.methodscopes.api.EnableScopedMethods;
-import com.github.kshashov.methodscopes.api.ScopedMethod;
+import com.github.kshashov.scopedmethods.api.EnableScopedMethods;
+import com.github.kshashov.scopedmethods.api.ScopedMethod;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.ProxyFactory;
@@ -15,11 +15,11 @@ import java.lang.reflect.Method;
 
 public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
     private static final AntPathMatcher pathMatcher = new AntPathMatcher(".");
-    private final MethodScopesManager scopesManager;
+    private final ScopedMethodsManager scopesManager;
     private final boolean classAnnotationRequired;
     private final String[] packages;
 
-    public ScopedMethodsBeanPostProcessor(MethodScopesManager methodScopesManager, boolean classAnnotationRequired, String[] packages) {
+    public ScopedMethodsBeanPostProcessor(ScopedMethodsManager methodScopesManager, boolean classAnnotationRequired, String[] packages) {
         this.scopesManager = methodScopesManager;
         this.classAnnotationRequired = classAnnotationRequired;
         this.packages = packages;
@@ -69,9 +69,9 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
     }
 
     private static class MethodScopesInterceptor implements MethodInterceptor {
-        private final MethodScopesManager scopesManager;
+        private final ScopedMethodsManager scopesManager;
 
-        private MethodScopesInterceptor(MethodScopesManager scopesManager) {
+        private MethodScopesInterceptor(ScopedMethodsManager scopesManager) {
             this.scopesManager = scopesManager;
         }
 
