@@ -85,7 +85,8 @@ public class MethodScopesManager {
 
 It is also important to note that we are using `ThreadLocal`, so our scopes **will not work correctly** if annotated methods spawn new threads.
 
-We're almost there. The only thing we need to do is to create `BeanPostProcessor`:
+We're almost there. The only thing we need to do is to create `BeanPostProcessor`. Here we make sure that the current bean contains annotated methods and create a proxy for it:
+
 ```java
 public class MethodScopesBeanPostProcessor2 implements BeanPostProcessor {
     ...        
@@ -115,7 +116,6 @@ public class MethodScopesBeanPostProcessor2 implements BeanPostProcessor {
     }
 }
 ```
-Here we make sure that the current bean contains annotated methods and create a proxy for it.
 
 In our interceptor we will
 * register the scope (if annotation exists)
@@ -146,3 +146,12 @@ Let's take a look at the possible implementation:
         }
     }
 ```
+
+That’s all. Everything we need is just declare the bean post processor and start using our own method scopes.
+
+### Conclusion
+This is already enough to prove the viability of our prototype but it would be nice to do a few tweaks:
+* Consider using AspectJ instead of runtime proxies. It works at compile time, so we would shorten the startup time a bit
+* Or at least add a configuration properties to set additional filtering of beans in the bean post processor
+* Add the ability to set a custom listener to handle scope changing. For example, it may be useful for us to keep track of a case when a master scope is created inside a replica scope
+* Add the ability to set a group for a scope, so that the application can have several non-overlapping sets of scopes for different purposes

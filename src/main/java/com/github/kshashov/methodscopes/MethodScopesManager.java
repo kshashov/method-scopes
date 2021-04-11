@@ -24,6 +24,10 @@ public class MethodScopesManager {
                 .collect(Collectors.toMap(c -> c.getGroup(), c -> c));
     }
 
+    public String getCurrent() {
+        return getCurrent("");
+    }
+
     public String getCurrent(@NotNull String group) {
         Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
 
@@ -33,6 +37,10 @@ public class MethodScopesManager {
         }
 
         return groupScopes.peek();
+    }
+
+    void startScope(@NotNull String key) {
+        startScope("", key);
     }
 
     void startScope(@NotNull String group, @NotNull String key) {
@@ -49,6 +57,10 @@ public class MethodScopesManager {
 
         key = validateScope(group, key, parent);
         scopes.get(group).add(key);
+    }
+
+    void popScope() {
+        popScope("");
     }
 
     void popScope(@NotNull String group) {
