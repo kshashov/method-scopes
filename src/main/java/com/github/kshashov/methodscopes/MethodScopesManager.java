@@ -2,24 +2,22 @@ package com.github.kshashov.methodscopes;
 
 import com.github.kshashov.methodscopes.api.MethodScopesConfiguration;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Service
 public class MethodScopesManager {
     private static final ThreadLocal<Map<String, Stack<String>>> ACTIVE_SCOPES = new ThreadLocal<>();
     private final Map<String, MethodScopesConfiguration> scopesConfigurations;
 
-    @Autowired
-    public MethodScopesManager(Optional<List<MethodScopesConfiguration>> scopesConfigurations) {
+    public MethodScopesManager(@NotNull List<MethodScopesConfiguration> scopesConfigurations) {
+        Objects.requireNonNull(scopesConfigurations);
+
         ACTIVE_SCOPES.set(new HashMap<>());
 
-        this.scopesConfigurations = scopesConfigurations.orElse(new ArrayList<>())
+        this.scopesConfigurations = scopesConfigurations
                 .stream()
                 .collect(Collectors.toMap(c -> c.getGroup(), c -> c));
     }

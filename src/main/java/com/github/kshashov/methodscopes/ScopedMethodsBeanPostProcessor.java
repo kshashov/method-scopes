@@ -13,13 +13,13 @@ import org.springframework.util.ClassUtils;
 
 import java.lang.reflect.Method;
 
-public class MethodScopesBeanPostProcessor implements BeanPostProcessor {
+public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
     private static final AntPathMatcher pathMatcher = new AntPathMatcher(".");
     private final MethodScopesManager scopesManager;
     private final boolean classAnnotationRequired;
     private final String[] packages;
 
-    public MethodScopesBeanPostProcessor(MethodScopesManager methodScopesManager, boolean classAnnotationRequired, String[] packages) {
+    public ScopedMethodsBeanPostProcessor(MethodScopesManager methodScopesManager, boolean classAnnotationRequired, String[] packages) {
         this.scopesManager = methodScopesManager;
         this.classAnnotationRequired = classAnnotationRequired;
         this.packages = packages;
