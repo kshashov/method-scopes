@@ -7,6 +7,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.ClassUtils;
@@ -57,7 +58,7 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
         supported = false;
         Method[] methods = bean.getClass().getDeclaredMethods();
         for (Method method : methods) {
-            if (AnnotationUtils.findAnnotation(method, ScopedMethod.class) != null) {
+            if (AnnotatedElementUtils.findMergedAnnotation(method, ScopedMethod.class) != null) {
                 supported = true;
                 break;
             }
@@ -83,7 +84,7 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
 
         @Override
         public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-            ScopedMethod scopedMethod = methodInvocation.getMethod().getAnnotation(ScopedMethod.class);
+            ScopedMethod scopedMethod = AnnotatedElementUtils.findMergedAnnotation(methodInvocation.getMethod(), ScopedMethod.class);
             boolean supported = scopedMethod != null;
 
             if (supported) {

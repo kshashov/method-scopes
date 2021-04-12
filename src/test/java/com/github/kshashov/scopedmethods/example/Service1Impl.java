@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class ServiceImpl implements IService {
+public class Service1Impl implements IService {
     @Autowired
     ScopedMethodsManager scopesManager;
     @Autowired
@@ -15,8 +15,8 @@ public class ServiceImpl implements IService {
 
     @Override
     public void doSomething() {
-        log.info("current scope: " + scopesManager.getCurrent(MyScopeConfiguration.SCOPE));
+        assert scopesManager.getCurrent(MyScopeConfiguration.SCOPE).equals("outer");
         service2.doSomething();
-        log.info("current scope: " + scopesManager.getCurrent(MyScopeConfiguration.SCOPE));
+        assert scopesManager.getCurrent(MyScopeConfiguration.SCOPE).equals("outer");
     }
 }

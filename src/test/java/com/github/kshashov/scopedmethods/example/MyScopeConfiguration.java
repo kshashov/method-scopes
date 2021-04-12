@@ -18,7 +18,6 @@ public class MyScopeConfiguration implements ScopedMethodsConfiguration {
 
     @Override
     public @NotNull String validateScope(@NotNull String key, @NotNull String parentKey) {
-        log.info("enter mygroup: " + parentKey + " -> " + key);
         return key;
     }
 

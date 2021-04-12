@@ -84,7 +84,12 @@ public class ScopedMethodsManager {
         Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
 
         if (scopes.containsKey(group)) {
-            String key = scopes.get(group).pop();
+            String key = null;
+            try {
+                key = scopes.get(group).pop();
+            } catch (EmptyStackException ex) {
+                // Do nothing
+            }
             onScopeFinished(group, key);
         }
     }

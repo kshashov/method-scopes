@@ -2,7 +2,6 @@ package com.github.kshashov.scopedmethods.api;
 
 import com.github.kshashov.scopedmethods.ScopedMethodsManager;
 import org.springframework.core.annotation.AliasFor;
-import org.springframework.stereotype.Component;
 
 import java.lang.annotation.*;
 
@@ -33,10 +32,9 @@ import java.lang.annotation.*;
  *
  * @see ScopedMethodsConfiguration Custom configuration with scope listeners
  */
-@Target({ElementType.METHOD})
+@Target({ElementType.METHOD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Component
 public @interface ScopedMethod {
     /**
      * @return Id of this scope

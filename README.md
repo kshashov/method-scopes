@@ -1,15 +1,35 @@
 # Scoped Methods Spring Boot Starter
 
 [![JitPack](https://jitpack.io/v/kshashov/scoped-methods.svg)](https://jitpack.io/#kshashov/scoped-methods)
-[![CircleCI](https://circleci.com/gh/kshashov/scoped-methods?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
-[![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/master/graph/badge.svg)](https://codecov.io/gh/kshashov/scoped-methods)
-
+[![CircleCI](https://circleci.com/gh/kshashov/scoped-methods.svg?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
+[![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/main/graph/badge.svg?token=QMR9GEVMSN)](https://codecov.io/gh/kshashov/scoped-methods)
 ## Download
 ### Maven
 TODO
 ### Gradle
 TODO
 ## Example
+
+```java
+public class Service1 {
+    ..
+    @ScopedMethod(key = "inner")
+    public void doSomething() {
+        log.info(scopesManager.getCurrent());
+    }
+}
+
+public class Service2 {
+    ...
+    @ScopedMethod(key = "outer")
+    public void doSomething() {
+        log.info(scopesManager.getCurrent());    // outer
+        service1.doSomething();                  // inner
+        log.info(scopesManager.getCurrent());    // outer
+    }
+}
+```
+#### On practice
 Imagine that you need to add some kind of metadata for a method so that it acts differently depending on this metadata.
  
 For example, you need to use a replica or master datasource for your base methods:
@@ -66,7 +86,7 @@ Property | Description | Default value
 |`scopedmethods.classAnnotationRequired`|TODO|`false`
 |`scopedmethods.packages`|TODO|`[]`
 
-### MethodScopesConfiguration
+### ScopedMethodsConfiguration
 
 You can declare your own `ScopedMethodsConfiguration` implementation to subscribe on scope changing. For example, it may be useful to keep track of a case when a master scope is created inside a replica scope.
 
