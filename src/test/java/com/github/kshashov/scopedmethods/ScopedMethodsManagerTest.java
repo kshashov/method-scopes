@@ -68,6 +68,8 @@ public class ScopedMethodsManagerTest {
 
         scopesManager.popScope("");
         assertNull(scopesManager.getCurrent());
+
+        scopesManager.popScope("group");
     }
 
     @Test
@@ -118,6 +120,11 @@ public class ScopedMethodsManagerTest {
 
         scopesManager.startScope("", "key2");
         assertEquals("key3", scopesManager.getCurrent());
+
+        emptyGroupConfig.setScopeFinishedListener(s -> {
+        });
+        scopesManager.popScope("");
+        scopesManager.popScope("");
     }
 
     @Test
@@ -152,10 +159,6 @@ public class ScopedMethodsManagerTest {
 
         scopesManager.popScope("");
         assertEquals(null, scopesManager.getCurrent());
-
-        emptyGroupConfig.setScopeFinishedListener(s -> {
-            assertNull(s);
-        });
     }
 
     private static class TestScopedMethodsConfiguration implements ScopedMethodsConfiguration {

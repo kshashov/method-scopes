@@ -56,6 +56,7 @@ public class ScopedMethodsManager {
      */
     void startScope(@NotNull String group, @NotNull String key) {
         Objects.requireNonNull(group);
+        Objects.requireNonNull(key);
 
         String parent = null;
         Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
@@ -63,7 +64,9 @@ public class ScopedMethodsManager {
         if (!scopes.containsKey(group)) {
             scopes.put(group, new Stack<>());
         } else {
-            parent = scopes.get(group).peek();
+            if (!scopes.get(group).isEmpty()) {
+                parent = scopes.get(group).peek();
+            }
         }
 
         key = validateScope(group, key, parent);
@@ -84,8 +87,8 @@ public class ScopedMethodsManager {
             String key = null;
             if (!scopes.get(group).isEmpty()) {
                 key = scopes.get(group).pop();
+                onScopeFinished(group, key);
             }
-            onScopeFinished(group, key);
         }
     }
 

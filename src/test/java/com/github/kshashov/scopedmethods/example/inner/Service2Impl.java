@@ -21,7 +21,5 @@ public class Service2Impl {
         } else {
             assert scopesManager.getCurrent(MyScopeConfiguration.SCOPE).equals("inner");
         }
-
-
     }
 }
