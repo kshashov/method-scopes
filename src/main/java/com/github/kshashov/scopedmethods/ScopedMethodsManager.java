@@ -12,16 +12,13 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class ScopedMethodsManager {
-    private static final ThreadLocal<Map<String, Stack<String>>> ACTIVE_SCOPES = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, Stack<String>>> ACTIVE_SCOPES = ThreadLocal.withInitial(HashMap::new);
     private final Map<String, ScopedMethodsConfiguration> scopesConfigurations;
 
     public ScopedMethodsManager(@NotNull List<ScopedMethodsConfiguration> scopesConfigurations) {
         Objects.requireNonNull(scopesConfigurations);
 
-        ACTIVE_SCOPES.set(new HashMap<>());
-
-        this.scopesConfigurations = scopesConfigurations
-                .stream()
+        this.scopesConfigurations = scopesConfigurations.stream()
                 .collect(Collectors.toMap(c -> c.getGroup(), c -> c));
     }
 
@@ -85,10 +82,8 @@ public class ScopedMethodsManager {
 
         if (scopes.containsKey(group)) {
             String key = null;
-            try {
+            if (!scopes.get(group).isEmpty()) {
                 key = scopes.get(group).pop();
-            } catch (EmptyStackException ex) {
-                // Do nothing
             }
             onScopeFinished(group, key);
         }

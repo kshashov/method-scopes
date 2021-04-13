@@ -46,7 +46,7 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
 
             String beanPackage = ClassUtils.getPackageName(bean.getClass());
             for (String pattern : packages) {
-                if (pathMatcher.isPattern(pattern)) {
+                if (pathMatcher.match(pattern, beanPackage)) {
                     supported = true;
                 }
             }
