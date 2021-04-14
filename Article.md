@@ -21,11 +21,10 @@ public interface MyService {
 Then, somewhere in the `AbstractRoutingDataSource` implementation, we could have something like this:
 ```java
 public class MasterSlaveDataSource extends AbstractRoutingDataSource {
-    ...
             
     @Override
     protected Object determineCurrentLookupKey() {
-        return scopesManager.getCurrent();
+        return MethodScopesManager.getCurrent();
     }
 }
 ```
@@ -56,15 +55,10 @@ Let's imagine that we are in 'master' scope, and at the same time we are enterin
 Yes, our service will be just a stack wrapper. 
 
 ```java
-@Service
 public class MethodScopesManager {
-    private static final ThreadLocal<Stack<String>> ACTIVE_SCOPES = new ThreadLocal<>();
+    private static final ThreadLocal<Stack<String>> ACTIVE_SCOPES = ThreadLocal.withInitial(Stack::new);
 
-    public MethodScopesManager() {
-        ACTIVE_SCOPES.set(new Stack<>());
-    }
-
-    public String getCurrent() {
+    public static String getCurrent() {
         Stack<String> scopes = ACTIVE_SCOPES.get();
         if (scopes.empty()) {
             return null;
@@ -73,11 +67,11 @@ public class MethodScopesManager {
         return scopes.peek();
     }
 
-    void startScope(@NotNull String key) {
+    static void startScope(@NotNull String key) {
         ACTIVE_SCOPES.get().add(key);
     }
 
-    void popScope() {
+    static void popScope() {
         ACTIVE_SCOPES.get().pop();
     }
 }
@@ -88,8 +82,7 @@ It is also important to note that we are using `ThreadLocal`, so our scopes **wi
 We're almost there. The only thing we need to do is to create `BeanPostProcessor`. Here we make sure that the current bean contains annotated methods and create a proxy for it:
 
 ```java
-public class MethodScopesBeanPostProcessor2 implements BeanPostProcessor {
-    ...        
+public class MethodScopesBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
@@ -107,7 +100,7 @@ public class MethodScopesBeanPostProcessor2 implements BeanPostProcessor {
 
         // Create proxy
         ProxyFactory proxyFactory = new ProxyFactory(bean);
-        proxyFactory.addAdvice(new MethodScopesInterceptor(scopesManager));
+        proxyFactory.addAdvice(new MethodScopesInterceptor());
         return proxyFactory.getProxy();
     }
 
@@ -125,7 +118,6 @@ In our interceptor we will
 Let's take a look at the possible implementation:
 ```java
     private static class MethodScopesInterceptor implements MethodInterceptor {
-        ...
 
         @Override
         public Object invoke(MethodInvocation methodInvocation) throws Throwable {
@@ -133,14 +125,14 @@ Let's take a look at the possible implementation:
             boolean supported = scopedMethod != null;
 
             if (supported) {
-                scopesManager.startScope(scopedMethod.key());
+                MethodScopesManager.startScope(scopedMethod.key());
             }
 
             try {
                 return methodInvocation.proceed();
             } finally {
                 if (supported) {
-                    scopesManager.popScope();
+                    MethodScopesManager.popScope();
                 }
             }
         }

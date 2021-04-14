@@ -17,8 +17,8 @@ public class ScopedMethodsManagerTest {
     void getCurrent_Empty_ReturnsNull() {
         ScopedMethodsManager scopesManager = new ScopedMethodsManager(new ArrayList<>());
 
-        assertNull(scopesManager.getCurrent());
-        assertNull(scopesManager.getCurrent(""));
+        assertNull(ScopedMethodsHolder.getCurrent());
+        assertNull(ScopedMethodsHolder.getCurrent(""));
     }
 
     @Test
@@ -26,28 +26,28 @@ public class ScopedMethodsManagerTest {
         ScopedMethodsManager scopesManager = new ScopedMethodsManager(new ArrayList<>());
 
         scopesManager.startScope("group1", "key1");
-        assertEquals("key1", scopesManager.getCurrent("group1"));
-        assertNull(scopesManager.getCurrent("group2"));
+        assertEquals("key1", ScopedMethodsHolder.getCurrent("group1"));
+        assertNull(ScopedMethodsHolder.getCurrent("group2"));
 
         scopesManager.startScope("group1", "key2");
-        assertEquals("key2", scopesManager.getCurrent("group1"));
-        assertNull(scopesManager.getCurrent("group2"));
+        assertEquals("key2", ScopedMethodsHolder.getCurrent("group1"));
+        assertNull(ScopedMethodsHolder.getCurrent("group2"));
 
         scopesManager.startScope("group2", "key3");
-        assertEquals("key2", scopesManager.getCurrent("group1"));
-        assertEquals("key3", scopesManager.getCurrent("group2"));
+        assertEquals("key2", ScopedMethodsHolder.getCurrent("group1"));
+        assertEquals("key3", ScopedMethodsHolder.getCurrent("group2"));
 
         scopesManager.popScope("group1");
-        assertEquals("key1", scopesManager.getCurrent("group1"));
-        assertEquals("key3", scopesManager.getCurrent("group2"));
+        assertEquals("key1", ScopedMethodsHolder.getCurrent("group1"));
+        assertEquals("key3", ScopedMethodsHolder.getCurrent("group2"));
 
         scopesManager.popScope("group2");
-        assertEquals("key1", scopesManager.getCurrent("group1"));
-        assertNull(scopesManager.getCurrent("group2"));
+        assertEquals("key1", ScopedMethodsHolder.getCurrent("group1"));
+        assertNull(ScopedMethodsHolder.getCurrent("group2"));
 
         scopesManager.popScope("group1");
-        assertNull(scopesManager.getCurrent("group1"));
-        assertNull(scopesManager.getCurrent("group2"));
+        assertNull(ScopedMethodsHolder.getCurrent("group1"));
+        assertNull(ScopedMethodsHolder.getCurrent("group2"));
     }
 
     @Test
@@ -55,19 +55,19 @@ public class ScopedMethodsManagerTest {
         ScopedMethodsManager scopesManager = new ScopedMethodsManager(new ArrayList<>());
 
         scopesManager.startScope("", "key1");
-        assertEquals("key1", scopesManager.getCurrent());
+        assertEquals("key1", ScopedMethodsHolder.getCurrent());
 
         scopesManager.startScope("", "key2");
-        assertEquals("key2", scopesManager.getCurrent());
+        assertEquals("key2", ScopedMethodsHolder.getCurrent());
 
         scopesManager.startScope("group", "key3");
-        assertEquals("key2", scopesManager.getCurrent());
+        assertEquals("key2", ScopedMethodsHolder.getCurrent());
 
         scopesManager.popScope("");
-        assertEquals("key1", scopesManager.getCurrent());
+        assertEquals("key1", ScopedMethodsHolder.getCurrent());
 
         scopesManager.popScope("");
-        assertNull(scopesManager.getCurrent());
+        assertNull(ScopedMethodsHolder.getCurrent());
 
         scopesManager.popScope("group");
     }
@@ -76,12 +76,12 @@ public class ScopedMethodsManagerTest {
     void popScope_Empty_DoNothing() {
         ScopedMethodsManager scopesManager = new ScopedMethodsManager(new ArrayList<>());
 
-        assertNull(scopesManager.getCurrent());
+        assertNull(ScopedMethodsHolder.getCurrent());
 
         assertDoesNotThrow(() -> {
             scopesManager.popScope("");
         });
-        assertNull(scopesManager.getCurrent());
+        assertNull(ScopedMethodsHolder.getCurrent());
 
         scopesManager.startScope("", "key");
         scopesManager.popScope("");
@@ -89,7 +89,7 @@ public class ScopedMethodsManagerTest {
             scopesManager.popScope("");
         });
 
-        assertNull(scopesManager.getCurrent());
+        assertNull(ScopedMethodsHolder.getCurrent());
     }
 
     @Test
@@ -110,7 +110,7 @@ public class ScopedMethodsManagerTest {
         });
 
         scopesManager.startScope("", "key1");
-        assertEquals("key1", scopesManager.getCurrent());
+        assertEquals("key1", ScopedMethodsHolder.getCurrent());
 
         emptyGroupConfig.setValidateScopelistener((s, s2) -> {
             assertEquals("key2", s);
@@ -119,7 +119,7 @@ public class ScopedMethodsManagerTest {
         });
 
         scopesManager.startScope("", "key2");
-        assertEquals("key3", scopesManager.getCurrent());
+        assertEquals("key3", ScopedMethodsHolder.getCurrent());
 
         emptyGroupConfig.setScopeFinishedListener(s -> {
         });
@@ -141,24 +141,24 @@ public class ScopedMethodsManagerTest {
         ScopedMethodsManager scopesManager = new ScopedMethodsManager(configs);
 
         scopesManager.startScope("", "key1");
-        assertEquals("key1", scopesManager.getCurrent());
+        assertEquals("key1", ScopedMethodsHolder.getCurrent());
 
         scopesManager.startScope("", "key2");
-        assertEquals("key2", scopesManager.getCurrent());
+        assertEquals("key2", ScopedMethodsHolder.getCurrent());
 
         emptyGroupConfig.setScopeFinishedListener(s -> {
             assertEquals("key2", s);
         });
 
         scopesManager.popScope("");
-        assertEquals("key1", scopesManager.getCurrent());
+        assertEquals("key1", ScopedMethodsHolder.getCurrent());
 
         emptyGroupConfig.setScopeFinishedListener(s -> {
             assertEquals("key1", s);
         });
 
         scopesManager.popScope("");
-        assertEquals(null, scopesManager.getCurrent());
+        assertEquals(null, ScopedMethodsHolder.getCurrent());
     }
 
     private static class TestScopedMethodsConfiguration implements ScopedMethodsConfiguration {

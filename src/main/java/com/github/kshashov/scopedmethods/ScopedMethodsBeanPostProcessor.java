@@ -31,45 +31,66 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-        boolean supported = true;
 
-        // Validate class annotation
-        if (classAnnotationRequired && (AnnotationUtils.findAnnotation(bean.getClass(), EnableScopedMethods.class) == null)) {
-            supported = false;
+        if (isHasSupportedClass(bean)
+                && isHasSupportedMethods(bean)
+                && isHasSupportedPackage(bean)) {
+            // Create proxy
+            ProxyFactory proxyFactory = new ProxyFactory(bean);
+            proxyFactory.addAdvice(new MethodScopesInterceptor(scopesManager));
+            return proxyFactory.getProxy();
         }
 
-        if (!supported) return bean;
+        return bean;
+    }
 
-        // Validate package
-        if (packages.length > 0) {
-            supported = false;
+    /**
+     * Checks class package in white list.
+     *
+     * @param bean bean object
+     * @return {@code true} if class has supported package or no filters are set
+     */
+    private boolean isHasSupportedPackage(Object bean) {
+        if (packages.length == 0) {
+            return true;
+        }
 
-            String beanPackage = ClassUtils.getPackageName(bean.getClass());
-            for (String pattern : packages) {
-                if (pathMatcher.match(pattern, beanPackage)) {
-                    supported = true;
-                }
+        String beanPackage = ClassUtils.getPackageName(bean.getClass());
+        for (String pattern : packages) {
+            if (pathMatcher.match(pattern, beanPackage)) {
+                return true;
             }
         }
 
-        if (!supported) return bean;
+        return false;
+    }
 
-        // Validate methods
-        supported = false;
+    /**
+     * Check for {@link EnableScopedMethods} annotation on bean methods.
+     *
+     * @param bean bean object
+     * @return {@code true} if annotation exists
+     */
+    private boolean isHasSupportedMethods(Object bean) {
         Method[] methods = bean.getClass().getDeclaredMethods();
         for (Method method : methods) {
             if (AnnotatedElementUtils.findMergedAnnotation(method, ScopedMethod.class) != null) {
-                supported = true;
-                break;
+                return true;
             }
         }
 
-        if (!supported) return bean;
+        return false;
+    }
 
-        // Create proxy
-        ProxyFactory proxyFactory = new ProxyFactory(bean);
-        proxyFactory.addAdvice(new MethodScopesInterceptor(scopesManager));
-        return proxyFactory.getProxy();
+    /**
+     * Check for {@link EnableScopedMethods} annotation existance if 'classAnnotationRequired' option is enabled.
+     *
+     * @param bean bean object
+     * @return {@code true} if annotation exists or no needed
+     */
+    private boolean isHasSupportedClass(Object bean) {
+        return !classAnnotationRequired
+                || (AnnotationUtils.findAnnotation(bean.getClass(), EnableScopedMethods.class) != null);
     }
 
     /**

@@ -13,13 +13,11 @@ class PackagesFilteringIntegrationTest extends BaseTest {
 
     @Autowired
     IService baseService;
-    @Autowired
-    ScopedMethodsManager scopesManager;
 
     @Test
     void contextLoads() {
-        assertNull(scopesManager.getCurrent(MyScopeConfiguration.SCOPE));
+        assertNull(ScopedMethodsHolder.getCurrent(MyScopeConfiguration.SCOPE));
         baseService.doSomething();
-        assertNull(scopesManager.getCurrent(MyScopeConfiguration.SCOPE));
+        assertNull(ScopedMethodsHolder.getCurrent(MyScopeConfiguration.SCOPE));
     }
 }

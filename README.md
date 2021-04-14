@@ -35,9 +35,6 @@ Imagine that you need to add some kind of metadata for a method so that it acts 
 For example, you need to use a replica or master datasource for your base methods:
 ```java
 public interface MyService {
-    @ScopedMethod("master")
-    void update(String name);
-
     @ScopedMethod("replica")
     String get(String name);
 }
@@ -45,11 +42,10 @@ public interface MyService {
 Then, somewhere in the `AbstractRoutingDataSource` implementation, you could have something like this:
 ```java
 public class MasterSlaveDataSource extends AbstractRoutingDataSource {
-    ...
-            
+
     @Override
     protected Object determineCurrentLookupKey() {
-        return scopesManager.getCurrent();
+        return ScopedMethodsHolder.getCurrent();
     }
 }
 ```
@@ -72,19 +68,19 @@ If the `classAnnotationRequired` option is `true` (see the _Configurations_ sect
 
 ## ScopedMethodsManager
 
-Inject `ScopedMethodsManager` bean to get the ability to retrive the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
+Inject `ScopedMethodsHolder` bean to get the ability to retrive the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
 ```java
-scopesManager.getCurrent(); // default "" group
-scopesManager.getCurrent("datasource");
-scopesManager.getCurrent("mygroup");
+ScopedMethodsHolder.getCurrent(); // default "" group
+ScopedMethodsHolder.getCurrent("datasource");
+ScopedMethodsHolder.getCurrent("mygroup");
 ```
 ## Configurations
 
 ### Properties
 Property | Description | Default value
 --- | ---| --- 
-|`scopedmethods.classAnnotationRequired`|TODO|`false`
-|`scopedmethods.packages`|TODO|`[]`
+|`scopedmethods.classAnnotationRequired`|Indicates whether `@EnableScopedMethods` annotation must be set for the all classes in which `@ScopedMethod` annotated methods are declared|`false`
+|`scopedmethods.packages`|White list of package patterns. If the list is empty, filtering will not be performed. `org.springframework.util.AntPathMatcher` is used for patterns matching, so all [Ant-style path patterns](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/util/AntPathMatcher.html) are supported (e.g. `foo.bar`, `foo.bar.**`): |`[]`
 
 ### ScopedMethodsConfiguration
 

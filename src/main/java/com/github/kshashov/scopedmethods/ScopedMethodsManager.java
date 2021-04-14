@@ -4,7 +4,10 @@ import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 /**
@@ -12,7 +15,6 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class ScopedMethodsManager {
-    private static final ThreadLocal<Map<String, Stack<String>>> ACTIVE_SCOPES = ThreadLocal.withInitial(HashMap::new);
     private final Map<String, ScopedMethodsConfiguration> scopesConfigurations;
 
     public ScopedMethodsManager(@NotNull List<ScopedMethodsConfiguration> scopesConfigurations) {
@@ -20,32 +22,6 @@ public class ScopedMethodsManager {
 
         this.scopesConfigurations = scopesConfigurations.stream()
                 .collect(Collectors.toMap(c -> c.getGroup(), c -> c));
-    }
-
-    /**
-     * Shortcut for {@link #getCurrent(String)} for empty group.
-     *
-     * @return the current scope
-     */
-    public String getCurrent() {
-        return getCurrent("");
-    }
-
-    /**
-     * Returns the current scope id for the specified group.
-     *
-     * @param group group id
-     * @return the current scope id for the specified group or {@code null} if nothing
-     */
-    public String getCurrent(@NotNull String group) {
-        Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
-
-        Stack<String> groupScopes = scopes.get(group);
-        if ((groupScopes == null) || groupScopes.empty()) {
-            return null;
-        }
-
-        return groupScopes.peek();
     }
 
     /**
@@ -59,7 +35,7 @@ public class ScopedMethodsManager {
         Objects.requireNonNull(key);
 
         String parent = null;
-        Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
+        Map<String, Stack<String>> scopes = ScopedMethodsHolder.ACTIVE_SCOPES.get();
 
         if (!scopes.containsKey(group)) {
             scopes.put(group, new Stack<>());
@@ -81,7 +57,7 @@ public class ScopedMethodsManager {
     void popScope(@NotNull String group) {
         Objects.requireNonNull(group);
 
-        Map<String, Stack<String>> scopes = ACTIVE_SCOPES.get();
+        Map<String, Stack<String>> scopes = ScopedMethodsHolder.ACTIVE_SCOPES.get();
 
         if (scopes.containsKey(group)) {
             String key = null;
