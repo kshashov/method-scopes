@@ -1,9 +1,9 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan("com.github.kshashov.scopedmethods")
+@ComponentScan("io.github.kshashov.scopedmethods")
 public class MainTestConfiguration {
 }

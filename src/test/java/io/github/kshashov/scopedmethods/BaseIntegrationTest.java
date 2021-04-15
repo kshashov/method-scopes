@@ -1,7 +1,7 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
 import org.springframework.test.context.ContextConfiguration;
 
 @ContextConfiguration(classes = MainTestConfiguration.class)
-public class BaseTest {
+public class BaseIntegrationTest {
 }

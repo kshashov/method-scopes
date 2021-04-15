@@ -1,9 +1,9 @@
-package com.github.kshashov.scopedmethods.example.inner;
+package io.github.kshashov.scopedmethods.example.inner;
 
-import com.github.kshashov.scopedmethods.ScopedMethodsHolder;
-import com.github.kshashov.scopedmethods.ScopedMethodsProperties;
-import com.github.kshashov.scopedmethods.example.InnerScope;
-import com.github.kshashov.scopedmethods.example.MyScopeConfiguration;
+import io.github.kshashov.scopedmethods.ScopedMethodsHolder;
+import io.github.kshashov.scopedmethods.ScopedMethodsProperties;
+import io.github.kshashov.scopedmethods.example.InnerScope;
+import io.github.kshashov.scopedmethods.example.MyScopeConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

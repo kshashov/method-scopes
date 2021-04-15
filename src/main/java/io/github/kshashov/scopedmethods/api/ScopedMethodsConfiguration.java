@@ -1,4 +1,4 @@
-package com.github.kshashov.scopedmethods.api;
+package io.github.kshashov.scopedmethods.api;
 
 import javax.validation.constraints.NotNull;
 

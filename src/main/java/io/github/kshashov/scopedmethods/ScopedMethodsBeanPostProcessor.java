@@ -1,7 +1,7 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
-import com.github.kshashov.scopedmethods.api.EnableScopedMethods;
-import com.github.kshashov.scopedmethods.api.ScopedMethod;
+import io.github.kshashov.scopedmethods.api.EnableScopedMethods;
+import io.github.kshashov.scopedmethods.api.ScopedMethod;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.aop.framework.ProxyFactory;
@@ -31,12 +31,12 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
 
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
-
-        if (isHasSupportedClass(bean)
-                && isHasSupportedMethods(bean)
-                && isHasSupportedPackage(bean)) {
+        if (supportsClass(bean)
+                && supportsPackage(bean)
+                && supportsMethods(bean)) {
             // Create proxy
             ProxyFactory proxyFactory = new ProxyFactory(bean);
+            proxyFactory.setProxyTargetClass(true);
             proxyFactory.addAdvice(new MethodScopesInterceptor(scopesManager));
             return proxyFactory.getProxy();
         }
@@ -50,7 +50,7 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
      * @param bean bean object
      * @return {@code true} if class has supported package or no filters are set
      */
-    private boolean isHasSupportedPackage(Object bean) {
+    private boolean supportsPackage(Object bean) {
         if (packages.length == 0) {
             return true;
         }
@@ -71,7 +71,7 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
      * @param bean bean object
      * @return {@code true} if annotation exists
      */
-    private boolean isHasSupportedMethods(Object bean) {
+    private boolean supportsMethods(Object bean) {
         Method[] methods = bean.getClass().getDeclaredMethods();
         for (Method method : methods) {
             if (AnnotatedElementUtils.findMergedAnnotation(method, ScopedMethod.class) != null) {
@@ -88,7 +88,7 @@ public class ScopedMethodsBeanPostProcessor implements BeanPostProcessor {
      * @param bean bean object
      * @return {@code true} if annotation exists or no needed
      */
-    private boolean isHasSupportedClass(Object bean) {
+    private boolean supportsClass(Object bean) {
         return !classAnnotationRequired
                 || (AnnotationUtils.findAnnotation(bean.getClass(), EnableScopedMethods.class) != null);
     }

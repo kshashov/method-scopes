@@ -100,6 +100,7 @@ public class MethodScopesBeanPostProcessor implements BeanPostProcessor {
 
         // Create proxy
         ProxyFactory proxyFactory = new ProxyFactory(bean);
+        proxyFactory.setProxyTargetClass(true);
         proxyFactory.addAdvice(new MethodScopesInterceptor());
         return proxyFactory.getProxy();
     }
@@ -110,12 +111,13 @@ public class MethodScopesBeanPostProcessor implements BeanPostProcessor {
 }
 ```
 
-In our interceptor we will
+We set the `setProxyTargetClass` property to to force the use of cglib in case if our proxy is a wrapper of another proxy.
+
+In our interceptor we 
 * register the scope (if annotation exists)
 * invoke the original method
 * remove the scope (if annotation exists)
 
-Let's take a look at the possible implementation:
 ```java
     private static class MethodScopesInterceptor implements MethodInterceptor {
 

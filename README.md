@@ -12,20 +12,20 @@ TODO
 
 ```java
 public class Service1 {
-    ..
+
     @ScopedMethod(key = "inner")
     public void doSomething() {
-        log.info(scopesManager.getCurrent());
+        log.info(ScopedMethodsHolder.getCurrent());
     }
 }
 
 public class Service2 {
-    ...
+
     @ScopedMethod(key = "outer")
     public void doSomething() {
-        log.info(scopesManager.getCurrent());    // outer
+        log.info(ScopedMethodsHolder.getCurrent());    // outer
         service1.doSomething();                  // inner
-        log.info(scopesManager.getCurrent());    // outer
+        log.info(ScopedMethodsHolder.getCurrent());    // outer
     }
 }
 ```

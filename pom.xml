@@ -8,7 +8,7 @@
 		<version>2.4.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.github.kshashov</groupId>
+	<groupId>io.github.kshashov</groupId>
 	<artifactId>scoped-methods-spring-boot-starter</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Scoped Methods</name>
@@ -16,6 +16,13 @@
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
+	<developers>
+		<developer>
+			<id>kshashov</id>
+			<name>Kirill Shashov</name>
+			<url>https://github.com/kshashov</url>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -172,5 +179,4 @@
 			</build>
 		</profile>
 	</profiles>
-
 </project>

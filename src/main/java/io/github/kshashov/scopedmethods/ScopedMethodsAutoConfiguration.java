@@ -1,6 +1,7 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
-import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
+import io.github.kshashov.scopedmethods.api.ScopedMethod;
+import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -11,11 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Added scoped methods support for the methods annotated with {@link com.github.kshashov.scopedmethods.api.ScopedMethod}.
+ * Added scoped methods support for the methods annotated with {@link ScopedMethod}.
  * <p>
  * Use {@link ScopedMethodsManager} to get the current scope id for the specified group.
  *
- * @see com.github.kshashov.scopedmethods.api.ScopedMethod
+ * @see ScopedMethod
  */
 @Slf4j
 @Configuration

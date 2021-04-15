@@ -1,6 +1,6 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
-import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
+import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 

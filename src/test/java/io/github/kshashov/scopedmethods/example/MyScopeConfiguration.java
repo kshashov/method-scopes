@@ -1,6 +1,6 @@
-package com.github.kshashov.scopedmethods.example;
+package io.github.kshashov.scopedmethods.example;
 
-import com.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
+import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

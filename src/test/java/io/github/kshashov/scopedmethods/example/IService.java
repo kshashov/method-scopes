@@ -1,4 +1,4 @@
-package com.github.kshashov.scopedmethods.example;
+package io.github.kshashov.scopedmethods.example;
 
 public interface IService {
     @OuterScope

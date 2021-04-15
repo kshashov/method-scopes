@@ -1,7 +1,7 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
-import com.github.kshashov.scopedmethods.example.IService;
-import com.github.kshashov.scopedmethods.example.MyScopeConfiguration;
+import io.github.kshashov.scopedmethods.example.IService;
+import io.github.kshashov.scopedmethods.example.MyScopeConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 @SpringBootTest
-class ScopedMethodIntegrationTest extends BaseTest {
+class ScopedMethodIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     IService baseService;

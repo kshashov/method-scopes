@@ -1,8 +1,8 @@
-package com.github.kshashov.scopedmethods.example;
+package io.github.kshashov.scopedmethods.example;
 
-import com.github.kshashov.scopedmethods.ScopedMethodsHolder;
-import com.github.kshashov.scopedmethods.api.EnableScopedMethods;
-import com.github.kshashov.scopedmethods.example.inner.Service2Impl;
+import io.github.kshashov.scopedmethods.ScopedMethodsHolder;
+import io.github.kshashov.scopedmethods.api.EnableScopedMethods;
+import io.github.kshashov.scopedmethods.example.inner.Service2Impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

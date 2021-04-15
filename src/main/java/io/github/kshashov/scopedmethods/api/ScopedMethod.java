@@ -1,6 +1,6 @@
-package com.github.kshashov.scopedmethods.api;
+package io.github.kshashov.scopedmethods.api;
 
-import com.github.kshashov.scopedmethods.ScopedMethodsManager;
+import io.github.kshashov.scopedmethods.ScopedMethodsManager;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;

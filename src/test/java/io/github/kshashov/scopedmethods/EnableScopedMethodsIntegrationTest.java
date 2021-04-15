@@ -1,15 +1,15 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
-import com.github.kshashov.scopedmethods.example.IService;
-import com.github.kshashov.scopedmethods.example.MyScopeConfiguration;
+import io.github.kshashov.scopedmethods.example.IService;
+import io.github.kshashov.scopedmethods.example.MyScopeConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest(properties = "scopedmethods.packages:com.github.kshashov.scopedmethods.example")
-class PackagesFilteringIntegrationTest extends BaseTest {
+@SpringBootTest(properties = "scopedmethods.classAnnotationRequired:true")
+class EnableScopedMethodsIntegrationTest extends BaseIntegrationTest {
 
     @Autowired
     IService baseService;

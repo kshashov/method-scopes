@@ -1,6 +1,6 @@
-package com.github.kshashov.scopedmethods.example;
+package io.github.kshashov.scopedmethods.example;
 
-import com.github.kshashov.scopedmethods.api.ScopedMethod;
+import io.github.kshashov.scopedmethods.api.ScopedMethod;
 
 import java.lang.annotation.*;
 

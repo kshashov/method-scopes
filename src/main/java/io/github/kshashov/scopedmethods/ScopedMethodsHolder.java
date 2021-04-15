@@ -1,4 +1,4 @@
-package com.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods;
 
 import javax.validation.constraints.NotNull;
 import java.util.HashMap;
