@@ -66,9 +66,9 @@ The current implementation does not allow placing several such annotations on si
 ## @EnableScopedMethods
 If the `classAnnotationRequired` option is `true` (see the _Configurations_ section), this annotation must be set for the class in which `@ScopedMethod` annotated methods are declared.
 
-## ScopedMethodsManager
+## ScopedMethodsHolder
 
-Inject `ScopedMethodsHolder` bean to get the ability to retrive the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
+Inject `ScopedMethodsHolder` bean to get the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
 ```java
 ScopedMethodsHolder.getCurrent(); // default "" group
 ScopedMethodsHolder.getCurrent("datasource");

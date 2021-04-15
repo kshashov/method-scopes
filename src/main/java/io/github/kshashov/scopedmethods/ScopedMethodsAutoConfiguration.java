@@ -14,7 +14,7 @@ import java.util.Optional;
 /**
  * Added scoped methods support for the methods annotated with {@link ScopedMethod}.
  * <p>
- * Use {@link ScopedMethodsManager} to get the current scope id for the specified group.
+ * Use {@link ScopedMethodsHolder} to get the current scope id for the specified group.
  *
  * @see ScopedMethod
  */

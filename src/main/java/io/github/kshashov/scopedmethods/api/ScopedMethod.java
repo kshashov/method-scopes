@@ -1,13 +1,12 @@
 package io.github.kshashov.scopedmethods.api;
 
-import io.github.kshashov.scopedmethods.ScopedMethodsManager;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.*;
 
 /**
  * Indicates that the annotated method should be invoked in a scope with {@link #key()} id and {@link #group()} group. The current implementation doesn't allow to spawn new threads in annotated methods.
- * The current scope id for specified group can be get by {@link ScopedMethodsManager#getCurrent(String)} method.
+ * The current scope id for specified group can be get by {@link io.github.kshashov.scopedmethods.ScopedMethodsHolder#getCurrent(String)} method.
  *
  * <pre>
  * public class Service1 {
