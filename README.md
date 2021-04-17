@@ -1,16 +1,36 @@
 # Scoped Methods Spring Boot Starter
-
+![Maven metadata URL](https://img.shields.io/maven-metadata/v?color=green&label=Maven%20Central&metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fgithub%2Fkshashov%2Fscoped-methods-spring-boot-starter%2Fmaven-metadata.xml)
 [![JitPack](https://jitpack.io/v/kshashov/scoped-methods.svg)](https://jitpack.io/#kshashov/scoped-methods)
 [![CircleCI](https://circleci.com/gh/kshashov/scoped-methods.svg?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
 [![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/main/graph/badge.svg?token=QMR9GEVMSN)](https://codecov.io/gh/kshashov/scoped-methods)
 ## Download
 ### Maven
-TODO
+```xml
+<dependency>
+    <groupId>io.github.kshashov</groupId>
+    <artifactId>scoped-methods-spring-boot-starter</artifactId>
+    <version>0.9.1</version>
+</dependency>
+```
+
 ### Gradle
-TODO
+```groovy
+implementation group: 'io.github.kshashov', name: 'scoped-methods-spring-boot-starter', version: '0.9.1'
+```
 ## Example
 
 ```java
+
+@EnableScopedMethods(proxyTargetClass = true)
+@SpringBootApplication
+public class MethodScopesApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MethodScopesApplication.class, args);
+	}
+}
+
+@Service
 public class Service1 {
 
     @ScopedMethod(key = "inner")
@@ -19,12 +39,13 @@ public class Service1 {
     }
 }
 
+@Service
 public class Service2 {
 
     @ScopedMethod(key = "outer")
     public void doSomething() {
         log.info(ScopedMethodsHolder.getCurrent());    // outer
-        service1.doSomething();                  // inner
+        service1.doSomething();                        // inner
         log.info(ScopedMethodsHolder.getCurrent());    // outer
     }
 }
@@ -50,6 +71,9 @@ public class MasterSlaveDataSource extends AbstractRoutingDataSource {
 }
 ```
 
+## @EnableScopedMethods
+TODO
+
 ## @ScopedMethod
 Arguments:
 * `value` or `key`: scope identificator
@@ -63,11 +87,10 @@ Arguments:
     ```
 The current implementation does not allow placing several such annotations on single method.
 
-## @EnableScopedMethods
+## @HasScopedMethods
 If the `classAnnotationRequired` option is `true` (see the _Configurations_ section), this annotation must be set for the class in which `@ScopedMethod` annotated methods are declared.
 
 ## ScopedMethodsHolder
-
 Inject `ScopedMethodsHolder` bean to get the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
 ```java
 ScopedMethodsHolder.getCurrent(); // default "" group
@@ -80,7 +103,6 @@ ScopedMethodsHolder.getCurrent("mygroup");
 Property | Description | Default value
 --- | ---| --- 
 |`scopedmethods.classAnnotationRequired`|Indicates whether `@EnableScopedMethods` annotation must be set for the all classes in which `@ScopedMethod` annotated methods are declared|`false`
-|`scopedmethods.packages`|White list of package patterns. If the list is empty, filtering will not be performed. `org.springframework.util.AntPathMatcher` is used for patterns matching, so all [Ant-style path patterns](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/util/AntPathMatcher.html) are supported (e.g. `foo.bar`, `foo.bar.**`): |`[]`
 
 ### ScopedMethodsConfiguration
 

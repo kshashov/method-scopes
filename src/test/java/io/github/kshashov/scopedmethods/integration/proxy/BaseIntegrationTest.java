@@ -1,4 +1,4 @@
-package io.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods.integration.proxy;
 
 import org.springframework.test.context.ContextConfiguration;
 

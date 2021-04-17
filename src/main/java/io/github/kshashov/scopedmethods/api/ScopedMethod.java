@@ -13,7 +13,7 @@ import java.lang.annotation.*;
  *     ...
  *     &#64;ScopedMethod(key = "inner")
  *     public void doSomething() {
- *         log.info(scopesManager.getCurrent());
+ *         log.info(ScopedMethodsHolder.getCurrent());
  *     }
  * }
  *
@@ -21,9 +21,9 @@ import java.lang.annotation.*;
  *     ...
  *     &#64;ScopedMethod(key = "outer")
  *     public void doSomething() {
- *         log.info(scopesManager.getCurrent());    // outer
- *         service1.doSomething();                  // inner
- *         log.info(scopesManager.getCurrent());    // outer
+ *         log.info(ScopedMethodsHolder.getCurrent());    // outer
+ *         service1.doSomething();                        // inner
+ *         log.info(ScopedMethodsHolder.getCurrent());    // outer
  *     }
  * }
  *

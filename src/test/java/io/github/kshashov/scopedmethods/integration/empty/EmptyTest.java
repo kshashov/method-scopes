@@ -1,23 +1,24 @@
-package io.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods.integration.empty;
 
-import io.github.kshashov.scopedmethods.example.IService;
-import io.github.kshashov.scopedmethods.example.MyScopeConfiguration;
+import io.github.kshashov.scopedmethods.ScopedMethodsHolder;
+import io.github.kshashov.scopedmethods.integration.empty.impl.Service;
+import io.github.kshashov.scopedmethods.integration.proxy.impl.MyScopeConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest(properties = "scopedmethods.classAnnotationRequired:true")
-class EnableScopedMethodsIntegrationTest extends BaseIntegrationTest {
+@SpringBootTest
+class EmptyTest extends BaseIntegrationTest {
 
     @Autowired
-    IService baseService;
+    Service service;
 
     @Test
     void contextLoads() {
         assertNull(ScopedMethodsHolder.getCurrent(MyScopeConfiguration.SCOPE));
-        baseService.doSomething();
+        service.doSomething();
         assertNull(ScopedMethodsHolder.getCurrent(MyScopeConfiguration.SCOPE));
     }
 }

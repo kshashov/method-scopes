@@ -1,18 +1,17 @@
-package io.github.kshashov.scopedmethods.example;
+package io.github.kshashov.scopedmethods.integration.proxy.impl;
 
 import io.github.kshashov.scopedmethods.ScopedMethodsHolder;
-import io.github.kshashov.scopedmethods.api.EnableScopedMethods;
-import io.github.kshashov.scopedmethods.example.inner.Service2Impl;
+import io.github.kshashov.scopedmethods.api.HasScopedMethods;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@EnableScopedMethods
+@HasScopedMethods
 public class Service1Impl implements IService {
     @Autowired
-    Service2Impl service2;
+    Service2 service2;
 
     @Override
     public void doSomething() {

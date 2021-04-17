@@ -1,4 +1,4 @@
-package io.github.kshashov.scopedmethods.example;
+package io.github.kshashov.scopedmethods.integration.proxy.impl;
 
 import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
 import lombok.extern.slf4j.Slf4j;

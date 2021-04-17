@@ -1,15 +1,16 @@
-package io.github.kshashov.scopedmethods;
+package io.github.kshashov.scopedmethods.integration.proxy;
 
-import io.github.kshashov.scopedmethods.example.IService;
-import io.github.kshashov.scopedmethods.example.MyScopeConfiguration;
+import io.github.kshashov.scopedmethods.ScopedMethodsHolder;
+import io.github.kshashov.scopedmethods.integration.proxy.impl.IService;
+import io.github.kshashov.scopedmethods.integration.proxy.impl.MyScopeConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-@SpringBootTest(properties = "scopedmethods.packages:io.github.kshashov.scopedmethods.example")
-class PackagesFilteringIntegrationTest extends BaseIntegrationTest {
+@SpringBootTest(properties = "scopedmethods.classAnnotationRequired:true")
+class HasScopedMethodsProxyTest extends BaseIntegrationTest {
 
     @Autowired
     IService baseService;
