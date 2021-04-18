@@ -2,7 +2,7 @@ package io.github.kshashov.scopedmethods.integration.empty;
 
 import io.github.kshashov.scopedmethods.ScopedMethodsHolder;
 import io.github.kshashov.scopedmethods.integration.empty.impl.Service;
-import io.github.kshashov.scopedmethods.integration.proxy.impl.MyScopeConfiguration;
+import io.github.kshashov.scopedmethods.integration.proxy.ProxyTestConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +17,9 @@ class EmptyTest extends BaseIntegrationTest {
 
     @Test
     void contextLoads() {
-        assertNull(ScopedMethodsHolder.getCurrent(MyScopeConfiguration.SCOPE));
+        // Not working without Enable* annotation
+        assertNull(ScopedMethodsHolder.getCurrent(ProxyTestConfiguration.SCOPE));
         service.doSomething();
-        assertNull(ScopedMethodsHolder.getCurrent(MyScopeConfiguration.SCOPE));
+        assertNull(ScopedMethodsHolder.getCurrent(ProxyTestConfiguration.SCOPE));
     }
 }

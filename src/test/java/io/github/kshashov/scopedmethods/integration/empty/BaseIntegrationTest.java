@@ -2,6 +2,6 @@ package io.github.kshashov.scopedmethods.integration.empty;
 
 import org.springframework.test.context.ContextConfiguration;
 
-@ContextConfiguration(classes = MainTestConfiguration.class)
+@ContextConfiguration(classes = EmptyTestConfiguration.class)
 public class BaseIntegrationTest {
 }

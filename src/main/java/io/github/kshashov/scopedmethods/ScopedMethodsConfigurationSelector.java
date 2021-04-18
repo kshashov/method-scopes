@@ -6,7 +6,7 @@ import org.springframework.context.annotation.AdviceModeImportSelector;
 import org.springframework.context.annotation.AutoProxyRegistrar;
 
 /**
- * Selects which configuration should be used based on the value of EnableScopedMethods.mode on the importing @Configuration class.
+ * Selects which {@link BaseScopedMethodConfiguration} subclass should be used based on the value of AdviceMode mode on the importing @Configuration class.
  */
 public class ScopedMethodsConfigurationSelector extends AdviceModeImportSelector<EnableScopedMethods> {
     @Override
@@ -15,7 +15,7 @@ public class ScopedMethodsConfigurationSelector extends AdviceModeImportSelector
             case PROXY:
                 return new String[]{AutoProxyRegistrar.class.getName(), ProxyScopedMethodsConfiguration.class.getName()};
             case ASPECTJ:
-                return new String[]{};
+                return new String[]{AspectScopedMethodsConfiguration.class.getName()};
             default:
                 return null;
         }

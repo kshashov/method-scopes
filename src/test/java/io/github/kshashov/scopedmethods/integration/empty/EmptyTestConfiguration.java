@@ -5,5 +5,5 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @ComponentScan("io.github.kshashov.scopedmethods.integration.empty")
-public class MainTestConfiguration {
+public class EmptyTestConfiguration {
 }

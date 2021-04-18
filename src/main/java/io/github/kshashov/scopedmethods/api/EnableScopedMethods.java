@@ -32,7 +32,6 @@ import java.lang.annotation.*;
  * </pre>
  *
  * @see ScopedMethod
- * @see HasScopedMethods
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
@@ -53,7 +52,7 @@ public @interface EnableScopedMethods {
     boolean proxyTargetClass() default false;
 
     /**
-     * Indicate how transactional advice should be applied.
+     * Indicate how advisor should be applied.
      * <p><b>The default is {@link AdviceMode#PROXY}.</b>
      * Please note that proxy mode allows for interception of calls through the proxy
      * only. Local calls within the same class cannot get intercepted that way; an
@@ -65,7 +64,7 @@ public @interface EnableScopedMethods {
     AdviceMode mode() default AdviceMode.PROXY;
 
     /**
-     * Indicate the ordering of the execution of the transaction advisor
+     * Indicate the ordering of the execution of the advisor
      * when multiple advices are applied at a specific joinpoint.
      * <p>The default is {@link Ordered#LOWEST_PRECEDENCE}.
      */

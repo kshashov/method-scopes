@@ -7,5 +7,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableScopedMethods(proxyTargetClass = true)
 @ComponentScan("io.github.kshashov.scopedmethods.integration.proxy")
-public class MainTestConfiguration {
+public class ProxyTestConfiguration {
+    public static final String SCOPE = "mygroup";
 }

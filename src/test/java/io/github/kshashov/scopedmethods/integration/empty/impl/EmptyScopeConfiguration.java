@@ -1,12 +1,10 @@
 package io.github.kshashov.scopedmethods.integration.empty.impl;
 
 import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 
-@Slf4j
 @Component
 public class EmptyScopeConfiguration implements ScopedMethodsConfiguration {
     public static final String SCOPE = "";

@@ -17,19 +17,21 @@
 ```groovy
 implementation group: 'io.github.kshashov', name: 'scoped-methods-spring-boot-starter', version: '0.9.1'
 ```
-## Example
-
+## Usage
+Firstly, you need to enable scoped methods support by adding `@EnableScopedMethods` annotation to your configuration
 ```java
-
 @EnableScopedMethods(proxyTargetClass = true)
 @SpringBootApplication
 public class MethodScopesApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MethodScopesApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(MethodScopesApplication.class, args);
+    }
 }
+```
 
+After that you can annotate your methods with `@ScopedMethod` annotation and get the current scope id in runtime with `ScopedMethodsHolder` singleton:
+```java
 @Service
 public class Service1 {
 
@@ -52,8 +54,7 @@ public class Service2 {
 ```
 #### On practice
 Imagine that you need to add some kind of metadata for a method so that it acts differently depending on this metadata.
- 
-For example, you need to use a replica or master datasource for your base methods:
+For example, you need to use replica or master datasources in your backend methods. Using this library you just need to specify replica scope for some methods:
 ```java
 public interface MyService {
     @ScopedMethod("replica")
@@ -66,13 +67,17 @@ public class MasterSlaveDataSource extends AbstractRoutingDataSource {
 
     @Override
     protected Object determineCurrentLookupKey() {
-        return ScopedMethodsHolder.getCurrent();
+        String scopeId = ScopedMethodsHolder.getCurrent();
+        return scopeId != null? scopeId : "master"; // Use master DS by default
     }
 }
 ```
 
 ## @EnableScopedMethods
-TODO
+Arguments:
+* `mode`: indicates how interceptor should be applied. The default is `AdviceMode#PROXY`. Please note that proxy mode allows for interception of calls through the proxy only. Local calls within the same class cannot get intercepted that way
+* `proxyTargetClass`: indicate whether subclass-based (CGLIB) proxies are to be created as opposed to standard Java interface-based proxies. Applicable only if `mode` is set to `AdviceMode#PROXY`
+* `order`: indicates the ordering of the execution of the interceptor when multiple advices are applied at a specific joinpoint
 
 ## @ScopedMethod
 Arguments:
@@ -87,9 +92,6 @@ Arguments:
     ```
 The current implementation does not allow placing several such annotations on single method.
 
-## @HasScopedMethods
-If the `classAnnotationRequired` option is `true` (see the _Configurations_ section), this annotation must be set for the class in which `@ScopedMethod` annotated methods are declared.
-
 ## ScopedMethodsHolder
 Inject `ScopedMethodsHolder` bean to get the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
 ```java
@@ -98,11 +100,6 @@ ScopedMethodsHolder.getCurrent("datasource");
 ScopedMethodsHolder.getCurrent("mygroup");
 ```
 ## Configurations
-
-### Properties
-Property | Description | Default value
---- | ---| --- 
-|`scopedmethods.classAnnotationRequired`|Indicates whether `@EnableScopedMethods` annotation must be set for the all classes in which `@ScopedMethod` annotated methods are declared|`false`
 
 ### ScopedMethodsConfiguration
 

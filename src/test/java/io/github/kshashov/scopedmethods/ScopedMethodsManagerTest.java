@@ -1,7 +1,6 @@
 package io.github.kshashov.scopedmethods;
 
 import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
-import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
 import javax.validation.constraints.NotNull;
@@ -163,10 +162,16 @@ public class ScopedMethodsManagerTest {
 
     private static class TestScopedMethodsConfiguration implements ScopedMethodsConfiguration {
         private String group;
-        @Setter
         private BiFunction<String, String, String> validateScopelistener;
-        @Setter
         private Consumer<String> scopeFinishedListener;
+
+        public void setValidateScopelistener(BiFunction<String, String, String> validateScopelistener) {
+            this.validateScopelistener = validateScopelistener;
+        }
+
+        public void setScopeFinishedListener(Consumer<String> scopeFinishedListener) {
+            this.scopeFinishedListener = scopeFinishedListener;
+        }
 
         public TestScopedMethodsConfiguration(String group) {
             this.group = group;

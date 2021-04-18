@@ -1,7 +1,6 @@
 package io.github.kshashov.scopedmethods;
 
 import io.github.kshashov.scopedmethods.api.ScopedMethodsConfiguration;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -13,7 +12,6 @@ import java.util.stream.Collectors;
 /**
  * Repository storing information about currently active scopes. The current implementation doesn't allow to spawn new threads in annotated methods.
  */
-@Slf4j
 public class ScopedMethodsManager {
     private final Map<String, ScopedMethodsConfiguration> scopesConfigurations;
 
