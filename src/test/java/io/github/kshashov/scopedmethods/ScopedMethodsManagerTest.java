@@ -36,13 +36,23 @@ public class ScopedMethodsManagerTest {
         assertEquals("key2", ScopedMethodsHolder.getCurrent("group1"));
         assertEquals("key3", ScopedMethodsHolder.getCurrent("group2"));
 
+        assertTrue(ScopedMethodsHolder.contains("group1", "key1"));
+        assertTrue(ScopedMethodsHolder.contains("group1", "key2"));
+        assertTrue(ScopedMethodsHolder.contains("group2", "key3"));
+        assertFalse(ScopedMethodsHolder.contains("group1", "key3"));
+
         scopesManager.popScope("group1");
         assertEquals("key1", ScopedMethodsHolder.getCurrent("group1"));
         assertEquals("key3", ScopedMethodsHolder.getCurrent("group2"));
 
+        assertTrue(ScopedMethodsHolder.contains("group1", "key1"));
+        assertFalse(ScopedMethodsHolder.contains("group1", "key2"));
+        assertTrue(ScopedMethodsHolder.contains("group2", "key3"));
+
         scopesManager.popScope("group2");
         assertEquals("key1", ScopedMethodsHolder.getCurrent("group1"));
         assertNull(ScopedMethodsHolder.getCurrent("group2"));
+
 
         scopesManager.popScope("group1");
         assertNull(ScopedMethodsHolder.getCurrent("group1"));
@@ -62,8 +72,18 @@ public class ScopedMethodsManagerTest {
         scopesManager.startScope("group", "key3");
         assertEquals("key2", ScopedMethodsHolder.getCurrent());
 
+        assertTrue(ScopedMethodsHolder.contains("", "key1"));
+        assertTrue(ScopedMethodsHolder.contains("", "key2"));
+        assertTrue(ScopedMethodsHolder.contains("group", "key3"));
+        assertFalse(ScopedMethodsHolder.contains("", "key3"));
+
         scopesManager.popScope("");
         assertEquals("key1", ScopedMethodsHolder.getCurrent());
+
+        assertTrue(ScopedMethodsHolder.contains("", "key1"));
+        assertFalse(ScopedMethodsHolder.contains("", "key2"));
+        assertFalse(ScopedMethodsHolder.contains("", "key3"));
+        assertTrue(ScopedMethodsHolder.contains("group", "key3"));
 
         scopesManager.popScope("");
         assertNull(ScopedMethodsHolder.getCurrent());

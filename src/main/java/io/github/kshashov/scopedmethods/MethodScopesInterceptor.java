@@ -5,9 +5,8 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 
-/**
- * Creates scope before original method invocation and removes scope after it. Do nothing for the methods without {@link ScopedMethod} annotation.
- */
+import java.util.Set;
+
 public class MethodScopesInterceptor extends BaseScopedMethodInterceptor implements MethodInterceptor {
     private final ScopedMethodsManager scopesManager;
 
@@ -17,7 +16,7 @@ public class MethodScopesInterceptor extends BaseScopedMethodInterceptor impleme
 
     @Override
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
-        ScopedMethod scopedMethod = AnnotatedElementUtils.findMergedAnnotation(methodInvocation.getMethod(), ScopedMethod.class);
+        Set<ScopedMethod> scopedMethod = AnnotatedElementUtils.findMergedRepeatableAnnotations(methodInvocation.getMethod(), ScopedMethod.class);
         return invoke(methodInvocation::proceed, scopedMethod, scopesManager);
     }
 }

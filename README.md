@@ -3,7 +3,9 @@
 [![JitPack](https://jitpack.io/v/kshashov/scoped-methods.svg)](https://jitpack.io/#kshashov/scoped-methods)
 [![CircleCI](https://circleci.com/gh/kshashov/scoped-methods.svg?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
 [![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/main/graph/badge.svg?token=QMR9GEVMSN)](https://codecov.io/gh/kshashov/scoped-methods)
-## Download
+
+## Usage
+
 ### Maven
 ```xml
 <dependency>
@@ -17,7 +19,7 @@
 ```groovy
 implementation group: 'io.github.kshashov', name: 'scoped-methods-spring-boot-starter', version: '0.9.1'
 ```
-## Usage
+
 Firstly, you need to enable scoped methods support by adding `@EnableScopedMethods` annotation to your configuration
 ```java
 @EnableScopedMethods(proxyTargetClass = true)
@@ -75,7 +77,12 @@ public class MasterSlaveDataSource extends AbstractRoutingDataSource {
 
 ## @EnableScopedMethods
 Arguments:
-* `mode`: indicates how interceptor should be applied. The default is `AdviceMode#PROXY`. Please note that proxy mode allows for interception of calls through the proxy only. Local calls within the same class cannot get intercepted that way
+* `mode`: indicates how interceptor should be applied. 
+  * The default is `AdviceMode#PROXY`. Limitations: 
+    * Allows for the interception of calls through the proxy only. Local calls within the same class cannot get intercepted that way
+  * `AdviceMode#ASPECTJ`. Limitations: 
+    * no support for overriden method
+    * no support for meta-annotations
 * `proxyTargetClass`: indicate whether subclass-based (CGLIB) proxies are to be created as opposed to standard Java interface-based proxies. Applicable only if `mode` is set to `AdviceMode#PROXY`
 * `order`: indicates the ordering of the execution of the interceptor when multiple advices are applied at a specific joinpoint
 
@@ -90,7 +97,7 @@ Arguments:
     @ScopedMethod(group = "mygroup", key = "key1")
     @ScopedMethod(group = "mygroup", key = "key2")
     ```
-The current implementation does not allow placing several such annotations on single method.
+You can repeat this annotation for a single method to enable several scopes.
 
 ## ScopedMethodsHolder
 Inject `ScopedMethodsHolder` bean to get the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
@@ -99,9 +106,7 @@ ScopedMethodsHolder.getCurrent(); // default "" group
 ScopedMethodsHolder.getCurrent("datasource");
 ScopedMethodsHolder.getCurrent("mygroup");
 ```
-## Configurations
 
 ### ScopedMethodsConfiguration
 
-You can declare your own `ScopedMethodsConfiguration` implementation to subscribe on scope changing. For example, it may be useful to keep track of a case when a master scope is created inside a replica scope.
-
+You can declare  `ScopedMethodsConfiguration` implementations for each scope group to subscribe on scope changing. For example, it may be useful to keep track of a case when a master scope is created inside a replica scope.

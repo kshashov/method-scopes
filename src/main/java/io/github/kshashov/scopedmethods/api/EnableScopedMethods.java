@@ -48,6 +48,8 @@ public @interface EnableScopedMethods {
      * <p>Note that setting this attribute to {@code true} will affect <em>all</em>
      * Spring-managed beans requiring proxying, not just those marked with
      * {@link ScopedMethod}.
+     *
+     * @return proxyTargetClass
      */
     boolean proxyTargetClass() default false;
 
@@ -60,6 +62,8 @@ public @interface EnableScopedMethods {
      * ignored since Spring's interceptor does not even kick in for such a runtime
      * scenario. For a more advanced mode of interception, consider switching this to
      * {@link AdviceMode#ASPECTJ}.
+     *
+     * @return mode
      */
     AdviceMode mode() default AdviceMode.PROXY;
 
@@ -67,6 +71,8 @@ public @interface EnableScopedMethods {
      * Indicate the ordering of the execution of the advisor
      * when multiple advices are applied at a specific joinpoint.
      * <p>The default is {@link Ordered#LOWEST_PRECEDENCE}.
+     *
+     * @return order
      */
     int order() default Ordered.LOWEST_PRECEDENCE;
 }
