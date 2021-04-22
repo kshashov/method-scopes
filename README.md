@@ -1,5 +1,5 @@
 # Scoped Methods Spring Boot Starter
-![Maven metadata URL](https://img.shields.io/maven-metadata/v?color=green&label=Maven%20Central&metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fgithub%2Fkshashov%2Fscoped-methods-spring-boot-starter%2Fmaven-metadata.xml)
+[![Maven metadata URL](https://img.shields.io/maven-metadata/v?color=green&label=Maven%20Central&metadataUrl=https%3A%2F%2Frepo1.maven.org%2Fmaven2%2Fio%2Fgithub%2Fkshashov%2Fscoped-methods-spring-boot-starter%2Fmaven-metadata.xml)](https://search.maven.org/search?q=a:scoped-methods-spring-boot-starter)
 [![JitPack](https://jitpack.io/v/kshashov/scoped-methods.svg)](https://jitpack.io/#kshashov/scoped-methods)
 [![CircleCI](https://circleci.com/gh/kshashov/scoped-methods.svg?style=svg)](https://circleci.com/gh/kshashov/scoped-methods)
 [![codecov](https://codecov.io/gh/kshashov/scoped-methods/branch/main/graph/badge.svg?token=QMR9GEVMSN)](https://codecov.io/gh/kshashov/scoped-methods)
