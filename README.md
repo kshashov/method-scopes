@@ -11,13 +11,13 @@
 <dependency>
     <groupId>io.github.kshashov</groupId>
     <artifactId>scoped-methods-spring-boot-starter</artifactId>
-    <version>0.9.1</version>
+    <version>0.9.2</version>
 </dependency>
 ```
 
 ### Gradle
 ```groovy
-implementation group: 'io.github.kshashov', name: 'scoped-methods-spring-boot-starter', version: '0.9.1'
+implementation group: 'io.github.kshashov', name: 'scoped-methods-spring-boot-starter', version: '0.9.2'
 ```
 
 Firstly, you need to enable scoped methods support by adding `@EnableScopedMethods` annotation to your configuration
@@ -88,7 +88,7 @@ Arguments:
 
 ## @ScopedMethod
 Arguments:
-* `value` or `key`: scope identificator
+* `value` or `key`: scope identifier
 * `group`: allow you to have several sets of scopes for different purposes
     ```java
     @ScopedMethod(group = "datasource", key = "master")
@@ -100,13 +100,16 @@ Arguments:
 You can repeat this annotation for a single method to enable several scopes.
 
 ## ScopedMethodsHolder
-Inject `ScopedMethodsHolder` bean to get the current scope id at any time. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
+Inject `ScopedMethodsHolder` bean to get the current scope id or check the presence of the specific scope. Do not forget to specify the `group` argument if you have declare your scopes with this parameter.
 ```java
 ScopedMethodsHolder.getCurrent(); // default "" group
 ScopedMethodsHolder.getCurrent("datasource");
 ScopedMethodsHolder.getCurrent("mygroup");
+
+ScopedMethodsHolder.contains("myscope"); // default "" group
+ScopedMethodsHolder.contains("mygroup", "myscope");
 ```
 
-### ScopedMethodsConfiguration
+## ScopedMethodsConfiguration
 
 You can declare  `ScopedMethodsConfiguration` implementations for each scope group to subscribe on scope changing. For example, it may be useful to keep track of a case when a master scope is created inside a replica scope.
