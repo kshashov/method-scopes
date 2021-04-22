@@ -9,7 +9,7 @@
     </parent>
     <groupId>io.github.kshashov</groupId>
     <artifactId>scoped-methods-spring-boot-starter</artifactId>
-    <version>0.9.2-SNAPSHOT</version>
+    <version>0.9.2</version>
     <name>Scoped Methods</name>
     <description>Scoped Methods Spring Boot Starter</description>
     <properties>
@@ -25,7 +25,7 @@
     </licenses>
 
     <scm>
-        <tag>HEAD</tag>
+        <tag>scoped-methods-spring-boot-starter-0.9.2</tag>
         <connection>scm:git:git://github.com/kshashov/scoped-methods.git</connection>
         <developerConnection>scm:git:git@github.com:kshashov/scoped-methods.git</developerConnection>
         <url>https://github.com/kshashov/scoped-methods</url>
